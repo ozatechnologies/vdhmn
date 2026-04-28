@@ -23,8 +23,8 @@ its
     }
 
     :root {
-      --black: #ffffff;
-      --white: #000000;
+      --black: #0a0a0a;
+      --white: #ffffff;
       --mid: #888;
       --border: rgba(10, 10, 10, 0.12);
       --font-serif: 'Cormorant Garamond', Georgia, serif;
@@ -89,89 +89,179 @@ its
       }
     }
 
-    /* ── LOADER ── */
+    /* ── NEW LOADER ── */
     #loader {
       position: fixed;
       inset: 0;
-      background: var(--black);
-      z-index: 1000;
+      background: #ffffff;
+      z-index: 9999;
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
-      gap: 2.5rem;
+      align-items: center;
       overflow: hidden;
     }
 
-    .loader-logo {
+    .loader-wrapper {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
+      width: 240px;
     }
 
-    .loader-logo-name {
+    .brand-name {
       font-family: var(--font-serif);
-      font-size: clamp(2rem, 6vw, 3.5rem);
-      font-weight: 300;
-      color: var(--white);
-      letter-spacing: 0.15em;
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      margin: 0;
+      color: #000;
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(10px);
     }
 
-    .loader-logo-sub {
+    .brand-sub {
       font-family: var(--font-sans);
-      font-size: clamp(9px, 1.5vw, 11px);
-      font-weight: 300;
-      color: rgba(245, 243, 239, 0.5);
-      letter-spacing: 0.5em;
+      font-size: 11px;
+      letter-spacing: 7px;
       text-transform: uppercase;
+      margin: 4px 0 20px 0;
+      color: #000;
       opacity: 0;
     }
 
-    /* Stripe loader — mirrors brand logo */
-    .loader-stripes {
+    /* The Square Logo Container */
+    .logo-square {
+      position: relative;
       display: flex;
       flex-direction: column;
       gap: 4px;
-      width: clamp(120px, 25vw, 180px);
-      overflow: hidden;
+      /* Space between bars */
+      width: 180px;
     }
 
-    .loader-stripe {
-      height: 2px;
-      background: rgba(245, 243, 239, 0.15);
-      border-radius: 2px;
+    .bar {
+      background-color: #eeeeee;
+      /* The "empty" state */
+      width: 100%;
       position: relative;
       overflow: hidden;
-    }
-
-    .loader-stripe::after {
-      content: '';
-      position: absolute;
-      left: -100%;
-      top: 0;
-      bottom: 0;
-      width: 100%;
-      background: var(--white);
-      border-radius: 2px;
-    }
-
-    .loader-pct {
-      font-family: var(--font-sans);
-      font-size: 11px;
-      font-weight: 200;
-      color: rgba(245, 243, 239, 0.4);
-      letter-spacing: 0.3em;
       opacity: 0;
     }
 
-    .loader-cover {
+    /* Replicating the logo's specific bar thicknesses */
+    .bar:nth-child(1),
+    .bar:nth-child(2),
+    .bar:nth-child(3) {
+      height: 3px;
+    }
+
+    .bar:nth-child(4),
+    .bar:nth-child(5),
+    .bar:nth-child(6) {
+      height: 6px;
+    }
+
+    .bar:nth-child(7),
+    .bar:nth-child(8),
+    .bar:nth-child(9) {
+      height: 9px;
+    }
+
+    .bar:nth-child(10),
+    .bar:nth-child(11),
+    .bar:nth-child(12) {
+      height: 14px;
+    }
+
+    /* The "Filling" Animation */
+    .bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+
+    .loader-active .bar::after {
+      animation: fillBar 2.5s ease-in-out infinite;
+    }
+
+    /* Staggered delay to make it "build" from bottom to top */
+    .bar:nth-child(12)::after {
+      animation-delay: 0.0s;
+    }
+
+    .bar:nth-child(11)::after {
+      animation-delay: 0.1s;
+    }
+
+    .bar:nth-child(10)::after {
+      animation-delay: 0.2s;
+    }
+
+    .bar:nth-child(9)::after {
+      animation-delay: 0.3s;
+    }
+
+    .bar:nth-child(8)::after {
+      animation-delay: 0.4s;
+    }
+
+    .bar:nth-child(7)::after {
+      animation-delay: 0.5s;
+    }
+
+    .bar:nth-child(6)::after {
+      animation-delay: 0.6s;
+    }
+
+    .bar:nth-child(5)::after {
+      animation-delay: 0.7s;
+    }
+
+    .bar:nth-child(4)::after {
+      animation-delay: 0.8s;
+    }
+
+    .bar:nth-child(3)::after {
+      animation-delay: 0.9s;
+    }
+
+    .bar:nth-child(2)::after {
+      animation-delay: 1.0s;
+    }
+
+    .bar:nth-child(1)::after {
+      animation-delay: 1.1s;
+    }
+
+    @keyframes fillBar {
+      0% {
+        transform: scaleX(0);
+      }
+
+      40%,
+      60% {
+        transform: scaleX(1);
+      }
+
+      100% {
+        transform: scaleX(0);
+        transform-origin: right;
+      }
+    }
+
+    .loader-exit-cover {
       position: absolute;
       inset: 0;
-      background: var(--black);
+      background: var(--white);
+      transform: scaleY(0);
       transform-origin: top;
+      z-index: 10;
     }
 
     /* ── NAV ── */
@@ -236,6 +326,33 @@ its
       opacity: 1;
     }
 
+    .nav-cta {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      background: var(--black);
+      padding: 10px 20px;
+      border-radius: 2px;
+      transition: transform 0.3s, background 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-cta:hover {
+      background: #333;
+      transform: translateY(-1px);
+    }
+
+    .nav-cta::after {
+      content: '→';
+      font-size: 14px;
+    }
+
     .nav-menu-btn {
       display: none;
       flex-direction: column;
@@ -256,10 +373,37 @@ its
     @media (max-width: 640px) {
       .nav-links {
         display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--white);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 99;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .nav-links a {
+        color: var(--black);
+        font-size: 1.5rem;
+      }
+
+      .nav-cta {
+        margin-left: 0 !important;
+        margin-top: 2rem;
+        font-size: 1rem;
+        padding: 12px 24px;
       }
 
       .nav-menu-btn {
         display: flex;
+        z-index: 100;
       }
     }
 
@@ -290,9 +434,15 @@ its
       inset: -10%;
       width: 120%;
       height: 120%;
-      background:
-        linear-gradient(160deg, #111 0%, #1a1a1a 35%, #0d0d0d 70%, #050505 100%);
+      background: #0a0a0a;
       will-change: transform;
+    }
+
+    .hero-img-placeholder video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.95);
     }
 
     /* Architectural line overlay */
@@ -300,8 +450,8 @@ its
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(90deg, rgba(245, 243, 239, 0.04) 1px, transparent 1px),
-        linear-gradient(rgba(245, 243, 239, 0.03) 1px, transparent 1px);
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
       background-size: clamp(60px, 8vw, 100px) clamp(60px, 8vw, 100px);
       pointer-events: none;
     }
@@ -322,7 +472,7 @@ its
       font-weight: 300;
       letter-spacing: 0.4em;
       text-transform: uppercase;
-      color: rgba(245, 243, 239, 0.5);
+      color: rgba(255, 255, 255, 0.7);
       margin-bottom: clamp(1rem, 2vw, 1.5rem);
       overflow: hidden;
     }
@@ -354,7 +504,7 @@ its
     .hero-title em {
       font-style: italic;
       font-weight: 300;
-      color: rgba(245, 243, 239, 0.6);
+      color: rgba(255, 255, 255, 0.6);
     }
 
     .hero-cta-row {
@@ -415,14 +565,14 @@ its
       font-weight: 300;
       letter-spacing: 0.35em;
       text-transform: uppercase;
-      color: rgba(245, 243, 239, 0.4);
+      color: rgba(255, 255, 255, 0.6);
       writing-mode: vertical-rl;
     }
 
     .hero-scroll-line {
       width: 1px;
       height: 60px;
-      background: linear-gradient(to bottom, rgba(245, 243, 239, 0.4), transparent);
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), transparent);
       animation: scrollpulse 2s ease-in-out infinite;
     }
 
@@ -442,10 +592,10 @@ its
 
     /* ── MARQUEE ── */
     .marquee-section {
-      background: var(--black);
+      background: var(--white);
       padding: clamp(1.2rem, 2.5vw, 1.8rem) 0;
       overflow: hidden;
-      border-top: 1px solid rgba(245, 243, 239, 0.08);
+      border-top: 1px solid rgba(10, 10, 10, 0.08);
     }
 
     .marquee-track {
@@ -460,7 +610,7 @@ its
       font-size: clamp(12px, 2vw, 15px);
       font-weight: 300;
       font-style: italic;
-      color: rgba(245, 243, 239, 0.35);
+      color: rgba(10, 10, 10, 0.35);
       letter-spacing: 0.1em;
       flex-shrink: 0;
       display: flex;
@@ -471,7 +621,7 @@ its
     .marquee-item::after {
       content: '◆';
       font-size: 6px;
-      color: rgba(245, 243, 239, 0.2);
+      color: rgba(10, 10, 10, 0.2);
     }
 
     /* ── STATS BAR ── */
@@ -516,7 +666,7 @@ its
       position: relative;
       height: clamp(70vh, 85vh, 95vh);
       overflow: hidden;
-      background: var(--black);
+      background: var(--white);
     }
 
     .featured-img-bg {
@@ -524,7 +674,7 @@ its
       inset: -8%;
       width: 116%;
       height: 116%;
-      background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 40%, #181818 100%);
+      background: #f5f5f5;
       will-change: transform;
     }
 
@@ -534,8 +684,8 @@ its
       position: absolute;
       inset: 0;
       background-image:
-        repeating-linear-gradient(0deg, rgba(245, 243, 239, 0.03) 0px, rgba(245, 243, 239, 0.03) 1px, transparent 1px, transparent clamp(30px, 5vw, 50px)),
-        repeating-linear-gradient(90deg, rgba(245, 243, 239, 0.02) 0px, rgba(245, 243, 239, 0.02) 1px, transparent 1px, transparent clamp(30px, 5vw, 50px));
+        repeating-linear-gradient(0deg, rgba(10, 10, 10, 0.03) 0px, rgba(10, 10, 10, 0.03) 1px, transparent 1px, transparent clamp(30px, 5vw, 50px)),
+        repeating-linear-gradient(90deg, rgba(10, 10, 10, 0.02) 0px, rgba(10, 10, 10, 0.02) 1px, transparent 1px, transparent clamp(30px, 5vw, 50px));
     }
 
     .featured-photo {
@@ -559,8 +709,15 @@ its
       inset: -10%;
       width: 120%;
       height: 120%;
-      background: linear-gradient(160deg, #222 0%, #111 50%, #0a0a0a 100%);
+      background: #eeeeee;
       will-change: transform;
+    }
+
+    .featured-photo-inner video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.95);
     }
 
     /* Simulated building facade */
@@ -569,20 +726,20 @@ its
       position: absolute;
       inset: 0;
       background:
-        repeating-linear-gradient(0deg, transparent 0px, transparent 38px, rgba(245, 243, 239, 0.05) 38px, rgba(245, 243, 239, 0.05) 40px),
-        repeating-linear-gradient(90deg, transparent 0px, transparent 58px, rgba(245, 243, 239, 0.04) 58px, rgba(245, 243, 239, 0.04) 60px);
+        repeating-linear-gradient(0deg, transparent 0px, transparent 38px, rgba(10, 10, 10, 0.05) 38px, rgba(10, 10, 10, 0.05) 40px),
+        repeating-linear-gradient(90deg, transparent 0px, transparent 58px, rgba(10, 10, 10, 0.04) 58px, rgba(10, 10, 10, 0.04) 60px);
     }
 
     .featured-gradient {
       position: absolute;
       inset: 0;
-      background: linear-gradient(90deg, var(--black) 25%, transparent 70%);
+      background: linear-gradient(90deg, var(--white) 25%, transparent 70%);
       z-index: 2;
     }
 
     @media (max-width: 768px) {
       .featured-gradient {
-        background: linear-gradient(0deg, var(--black) 30%, transparent 80%);
+        background: linear-gradient(0deg, var(--white) 30%, transparent 80%);
       }
     }
 
@@ -611,7 +768,7 @@ its
       font-weight: 300;
       letter-spacing: 0.4em;
       text-transform: uppercase;
-      color: rgba(245, 243, 239, 0.4);
+      color: rgba(10, 10, 10, 0.4);
       margin-bottom: clamp(1rem, 2vw, 1.5rem);
       overflow: hidden;
     }
@@ -622,7 +779,7 @@ its
       font-weight: 300;
       line-height: 1;
       letter-spacing: -0.01em;
-      color: var(--white);
+      color: var(--black);
       margin-bottom: clamp(1rem, 2vw, 1.5rem);
     }
 
@@ -630,7 +787,7 @@ its
       font-family: var(--font-sans);
       font-size: clamp(12px, 1.5vw, 14px);
       font-weight: 300;
-      color: rgba(245, 243, 239, 0.45);
+      color: rgba(10, 10, 10, 0.45);
       line-height: 1.8;
       max-width: 320px;
       margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
@@ -645,16 +802,16 @@ its
       font-weight: 400;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--white);
+      color: var(--black);
       text-decoration: none;
-      border-bottom: 1px solid rgba(245, 243, 239, 0.3);
+      border-bottom: 1px solid rgba(10, 10, 10, 0.3);
       padding-bottom: 4px;
       transition: border-color 0.3s, gap 0.3s;
       width: fit-content;
     }
 
     .btn-arrow:hover {
-      border-color: var(--white);
+      border-color: var(--black);
       gap: 20px;
     }
 
@@ -705,7 +862,7 @@ its
       position: relative;
       overflow: hidden;
       aspect-ratio: 3/4;
-      background: var(--black);
+      background: var(--white);
       cursor: pointer;
     }
 
@@ -728,43 +885,50 @@ its
       transform: scale(1.06);
     }
 
+    .project-card-bg video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.85);
+    }
+
     .p-bg-1 {
-      background: linear-gradient(145deg, #1c1c1c 0%, #111 100%);
+      background: linear-gradient(145deg, #f0f0f0 0%, #e0e0e0 100%);
     }
 
     .p-bg-2 {
-      background: linear-gradient(145deg, #151515 0%, #0d0d0d 100%);
+      background: linear-gradient(145deg, #f5f5f5 0%, #e5e5e5 100%);
     }
 
     .p-bg-3 {
-      background: linear-gradient(145deg, #1a1a1a 0%, #101010 100%);
+      background: linear-gradient(145deg, #eeeeee 0%, #dddddd 100%);
     }
 
     .p-bg-1::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: repeating-linear-gradient(0deg, transparent 0, transparent 28px, rgba(255, 255, 255, 0.04) 28px, rgba(255, 255, 255, 0.04) 30px);
+      background: repeating-linear-gradient(0deg, transparent 0, transparent 28px, rgba(10, 10, 10, 0.04) 28px, rgba(10, 10, 10, 0.06) 30px);
     }
 
     .p-bg-2::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: repeating-linear-gradient(45deg, transparent 0, transparent 18px, rgba(255, 255, 255, 0.03) 18px, rgba(255, 255, 255, 0.03) 20px);
+      background: repeating-linear-gradient(45deg, transparent 0, transparent 18px, rgba(10, 10, 10, 0.03) 18px, rgba(10, 10, 10, 0.05) 20px);
     }
 
     .p-bg-3::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at 70% 30%, rgba(255, 255, 255, 0.06) 0%, transparent 60%);
+      background: radial-gradient(ellipse at 70% 30%, rgba(10, 10, 10, 0.06) 0%, transparent 60%);
     }
 
     .project-card-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(5, 5, 5, 0.9) 0%, transparent 60%);
+      background: linear-gradient(to top, rgba(255, 255, 255, 0.9) 0%, transparent 60%);
       z-index: 2;
     }
 
@@ -783,7 +947,7 @@ its
       font-weight: 300;
       letter-spacing: 0.35em;
       text-transform: uppercase;
-      color: rgba(245, 243, 239, 0.4);
+      color: rgba(10, 10, 10, 0.4);
       margin-bottom: 6px;
     }
 
@@ -791,13 +955,13 @@ its
       font-family: var(--font-serif);
       font-size: clamp(1.2rem, 2.5vw, 1.6rem);
       font-weight: 300;
-      color: var(--white);
+      color: var(--black);
       line-height: 1.1;
     }
 
     /* ── ABOUT STRIP ── */
     .about-strip {
-      background: var(--black);
+      background: var(--white);
       padding: clamp(4rem, 8vw, 8rem) clamp(1.5rem, 5vw, 4rem);
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -816,13 +980,13 @@ its
       font-size: clamp(2.2rem, 5vw, 4rem);
       font-weight: 300;
       line-height: 1.1;
-      color: var(--white);
+      color: var(--black);
       letter-spacing: -0.01em;
     }
 
     .about-headline em {
       font-style: italic;
-      color: rgba(245, 243, 239, 0.45);
+      color: rgba(10, 10, 10, 0.45);
     }
 
     .about-right {}
@@ -832,7 +996,7 @@ its
       font-size: clamp(13px, 1.5vw, 15px);
       font-weight: 300;
       line-height: 1.9;
-      color: rgba(245, 243, 239, 0.5);
+      color: rgba(10, 10, 10, 0.5);
       margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
     }
 
@@ -922,13 +1086,13 @@ its
 
     /* ── FOOTER ── */
     footer {
-      background: var(--black);
+      background: var(--white);
       padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 5vw, 4rem);
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 2rem;
       align-items: end;
-      border-top: 1px solid rgba(245, 243, 239, 0.08);
+      border-top: 1px solid rgba(10, 10, 10, 0.08);
     }
 
     @media (max-width: 640px) {
@@ -942,7 +1106,7 @@ its
       font-family: var(--font-serif);
       font-size: clamp(1.2rem, 2.5vw, 1.6rem);
       font-weight: 300;
-      color: var(--white);
+      color: var(--black);
       letter-spacing: 0.1em;
       margin-bottom: 4px;
     }
@@ -953,7 +1117,7 @@ its
       font-weight: 300;
       letter-spacing: 0.45em;
       text-transform: uppercase;
-      color: rgba(245, 243, 239, 0.3);
+      color: rgba(10, 10, 10, 0.3);
     }
 
     .footer-links {
@@ -969,13 +1133,13 @@ its
       font-weight: 300;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(245, 243, 239, 0.4);
+      color: rgba(10, 10, 10, 0.4);
       text-decoration: none;
       transition: color 0.3s;
     }
 
     .footer-links a:hover {
-      color: var(--white);
+      color: var(--black);
     }
 
     .footer-copy {
@@ -983,7 +1147,7 @@ its
       font-size: 9px;
       font-weight: 300;
       letter-spacing: 0.15em;
-      color: rgba(245, 243, 239, 0.2);
+      color: rgba(10, 10, 10, 0.2);
       text-align: right;
     }
 
@@ -996,10 +1160,21 @@ its
     /* ── SCROLL ANIMATIONS ── */
     .reveal-up {
       opacity: 0;
-      transform: translateY(40px);
     }
 
     .reveal-fade {
+      opacity: 0;
+    }
+
+    .reveal-left {
+      opacity: 0;
+    }
+
+    .reveal-right {
+      opacity: 0;
+    }
+
+    .reveal-zoom {
       opacity: 0;
     }
   </style>
@@ -1013,20 +1188,25 @@ its
 
   <!-- ── LOADER ── -->
   <div id="loader">
-    <div class="loader-logo">
-      <div class="loader-logo-name" id="ll-name">VARDHAMAN</div>
-      <div class="loader-logo-sub" id="ll-sub">CONSTRUCTION</div>
+    <div class="loader-wrapper">
+      <div class="brand-name">VARDHAMAN</div>
+      <div class="brand-sub">Construction</div>
+      <div class="logo-square">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
     </div>
-    <div class="loader-stripes" id="ll-stripes">
-      <div class="loader-stripe" id="ls1"></div>
-      <div class="loader-stripe" id="ls2"></div>
-      <div class="loader-stripe" id="ls3"></div>
-      <div class="loader-stripe" id="ls4"></div>
-      <div class="loader-stripe" id="ls5"></div>
-      <div class="loader-stripe" id="ls6"></div>
-    </div>
-    <div class="loader-pct" id="ll-pct">LOADING</div>
-    <div class="loader-cover" id="ll-cover"></div>
+    <div class="loader-exit-cover" id="loader-exit"></div>
   </div>
 
   <!-- ── NAV ── -->
@@ -1039,6 +1219,8 @@ its
       <li><a href="#projects">Projects</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#contact">Contact</a></li>
+      <li style="margin-left: 1rem;"><a href="https://arrowbyvardhman.framer.ai/" target="_blank" class="nav-cta">Arrow
+          by Vardhaman</a></li>
     </ul>
     <button class="nav-menu-btn" aria-label="Menu">
       <span></span><span></span>
@@ -1048,38 +1230,23 @@ its
   <!-- ── HERO ── -->
   <section class="hero" id="hero">
     <div class="hero-img-placeholder" id="hero-parallax">
-      <!-- Real project: replace with <img class="hero-img" src="your-hero.jpg" alt=""> -->
-      <div style="position:absolute;inset:0;background:
-      radial-gradient(ellipse 60% 80% at 70% 40%, #2a2a2a 0%, #111 50%, #050505 100%);"></div>
-      <div
-        style="position:absolute;inset:0;background-image:
-      repeating-linear-gradient(0deg,transparent 0,transparent 48px,rgba(245,243,239,0.03) 48px,rgba(245,243,239,0.03) 50px),
-      repeating-linear-gradient(90deg,transparent 0,transparent 78px,rgba(245,243,239,0.025) 78px,rgba(245,243,239,0.025) 80px);">
-      </div>
-      <!-- Architectural silhouette lines -->
-      <svg style="position:absolute;bottom:0;right:0;width:65%;height:100%;opacity:0.06" viewBox="0 0 600 600"
-        preserveAspectRatio="xMaxYMax meet">
-        <rect x="100" y="100" width="400" height="500" fill="none" stroke="white" stroke-width="1" />
-        <rect x="130" y="130" width="340" height="60" fill="none" stroke="white" stroke-width="0.5" />
-        <rect x="130" y="210" width="340" height="60" fill="none" stroke="white" stroke-width="0.5" />
-        <rect x="130" y="290" width="340" height="60" fill="none" stroke="white" stroke-width="0.5" />
-        <rect x="130" y="370" width="340" height="60" fill="none" stroke="white" stroke-width="0.5" />
-        <rect x="130" y="450" width="340" height="60" fill="none" stroke="white" stroke-width="0.5" />
-        <line x1="100" y1="100" x2="50" y2="50" stroke="white" stroke-width="0.5" />
-        <line x1="500" y1="100" x2="550" y2="50" stroke="white" stroke-width="0.5" />
-        <line x1="50" y1="50" x2="550" y2="50" stroke="white" stroke-width="0.5" />
-      </svg>
+      <video autoplay muted loop playsinline>
+        <source
+          src="https://www.shutterstock.com/shutterstock/videos/1081439090/preview/stock-footage-aerial-side-view-of-a-newly-built-modern-high-rise-apartment-building-facade-close-up-elevator.mp4"
+          type="video/mp4">
+      </video>
+      <div style="position:absolute;inset:0;background:rgba(0,0,0,0.3)"></div>
     </div>
 
     <div class="hero-lines"></div>
 
     <div class="hero-content">
-      <div class="hero-eyebrow"><span id="hero-ey">Est. 2008 · Jamnagar, Gujarat</span></div>
-      <h1 class="hero-title">
+      <div class="hero-eyebrow reveal-up"><span id="hero-ey">Est. 2008 · Jamnagar, Gujarat</span></div>
+      <h1 class="hero-title reveal-up">
         <span class="hero-title-line"><span class="hero-title-word" id="hw1">Building</span></span>
         <span class="hero-title-line"><span class="hero-title-word" id="hw2"><em>Excellence</em></span></span>
       </h1>
-      <div class="hero-cta-row" id="hero-ctas">
+      <div class="hero-cta-row reveal-up" id="hero-ctas">
         <a href="#projects" class="btn-hero filled">View Projects</a>
         <a href="#contact" class="btn-hero">Get in Touch</a>
       </div>
@@ -1092,7 +1259,7 @@ its
   </section>
 
   <!-- ── MARQUEE ── -->
-  <div class="marquee-section">
+  <div class="marquee-section reveal-fade">
     <div class="marquee-track" id="marquee-track">
       <div class="marquee-item">Residential Excellence</div>
       <div class="marquee-item">Commercial Spaces</div>
@@ -1110,52 +1277,39 @@ its
   </div>
 
   <!-- ── STATS ── -->
-  <div class="stats-bar" id="stats-bar">
+  <div class="stats-bar reveal-up" id="stats-bar">
     <div class="stat-item">
-      <div class="stat-num reveal-up" id="sn1">0</div>
+      <div class="stat-num" id="sn1">0</div>
       <div class="stat-label">Projects Delivered</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num reveal-up" id="sn2">0</div>
+      <div class="stat-num" id="sn2">0</div>
       <div class="stat-label">Years of Excellence</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num reveal-up" id="sn3">0</div>
+      <div class="stat-num" id="sn3">0</div>
       <div class="stat-label">Sq. Ft. Constructed</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num reveal-up" id="sn4">0</div>
+      <div class="stat-num" id="sn4">0</div>
       <div class="stat-label">Happy Clients</div>
     </div>
   </div>
 
   <!-- ── FEATURED PROJECT ── -->
-  <section class="featured" id="projects">
+  <section class="featured" id="featured">
     <div class="featured-img-bg" id="fp-parallax"></div>
     <div class="featured-photo">
       <div class="featured-photo-inner" id="fp-photo-parallax">
-        <!-- Architectural visualization -->
-        <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.12" viewBox="0 0 800 700"
-          preserveAspectRatio="xMidYMid slice">
-          <rect x="150" y="80" width="500" height="580" fill="none" stroke="white" stroke-width="1.5" />
-          <rect x="180" y="110" width="200" height="50" fill="none" stroke="white" stroke-width="0.7" />
-          <rect x="420" y="110" width="200" height="50" fill="none" stroke="white" stroke-width="0.7" />
-          <rect x="180" y="185" width="200" height="50" fill="none" stroke="white" stroke-width="0.7" />
-          <rect x="420" y="185" width="200" height="50" fill="none" stroke="white" stroke-width="0.7" />
-          <rect x="180" y="260" width="200" height="50" fill="none" stroke="white" stroke-width="0.7" />
-          <rect x="420" y="260" width="200" height="50" fill="none" stroke="white" stroke-width="0.7" />
-          <rect x="180" y="335" width="200" height="50" fill="none" stroke="white" stroke-width="0.7" />
-          <rect x="420" y="335" width="200" height="50" fill="none" stroke="white" stroke-width="0.7" />
-          <rect x="180" y="410" width="200" height="50" fill="none" stroke="white" stroke-width="0.7" />
-          <rect x="420" y="410" width="200" height="50" fill="none" stroke="white" stroke-width="0.7" />
-          <rect x="280" y="530" width="240" height="130" fill="none" stroke="white" stroke-width="1" />
-          <line x1="150" y1="80" x2="100" y2="30" stroke="white" stroke-width="0.8" />
-          <line x1="650" y1="80" x2="700" y2="30" stroke="white" stroke-width="0.8" />
-          <line x1="100" y1="30" x2="700" y2="30" stroke="white" stroke-width="0.8" />
-        </svg>
+        <video autoplay muted loop playsinline>
+          <source
+            src="https://www.shutterstock.com/shutterstock/videos/3930470009/preview/stock-footage-tower-cranes-at-high-residential-apartment-building-construction-site-at-sunset-real-estate.mp4"
+            type="video/mp4">
+        </video>
       </div>
     </div>
     <div class="featured-gradient"></div>
+
     <div class="featured-content">
       <div class="featured-tag reveal-up">Featured — Signature Project</div>
       <h2 class="featured-title reveal-up">Skyline<br>Residences</h2>
@@ -1167,33 +1321,51 @@ its
 
   <!-- ── PROJECTS GRID ── -->
   <section class="projects-section">
-    <div class="section-header">
+    <div class="section-header reveal-up">
       <div>
         <div class="section-label">Portfolio</div>
-        <h2 class="section-title reveal-up">Selected<br><em style="font-style:italic;color:#888">Work</em></h2>
+        <h2 class="section-title">Selected<br><em style="font-style:italic;color:#888">Work</em></h2>
       </div>
       <a href="#" class="btn-arrow" style="color:var(--black);border-color:rgba(10,10,10,0.3);margin-bottom:6px">All
         Projects</a>
     </div>
     <div class="projects-grid">
-      <div class="project-card">
-        <div class="project-card-bg p-bg-1 js-par-card"></div>
+      <div class="project-card reveal-up">
+        <div class="project-card-bg js-par-card">
+          <video autoplay muted loop playsinline>
+            <source
+              src="https://www.shutterstock.com/shutterstock/videos/4028935811/preview/stock-footage-city-skyscrapers-at-night-with-illuminated-windows-and-glowing-skyline-showcasing-modern.mp4"
+              type="video/mp4">
+          </video>
+        </div>
         <div class="project-card-overlay"></div>
         <div class="project-card-content">
           <div class="project-type">Residential · 2024</div>
           <div class="project-name">The Meridian<br>Towers</div>
         </div>
       </div>
-      <div class="project-card">
-        <div class="project-card-bg p-bg-2 js-par-card"></div>
+      <div class="project-card reveal-up">
+        <div class="project-card-bg js-par-card">
+          <video autoplay muted loop playsinline>
+            <source
+              src="https://www.shutterstock.com/shutterstock/videos/3903615835/preview/stock-footage-dubai-united-arab-emirates-may-aerial-view-of-illuminated-residential-and-hotel.mp4"
+              type="video/mp4">
+          </video>
+        </div>
         <div class="project-card-overlay"></div>
         <div class="project-card-content">
           <div class="project-type">Commercial · 2023</div>
           <div class="project-name">Apex Business<br>Centre</div>
         </div>
       </div>
-      <div class="project-card">
-        <div class="project-card-bg p-bg-3 js-par-card"></div>
+      <div class="project-card reveal-up">
+        <div class="project-card-bg js-par-card">
+          <video autoplay muted loop playsinline>
+            <source
+              src="https://www.shutterstock.com/shutterstock/videos/3993401251/preview/stock-footage-dubai-uae-january-pov-shot-of-dubai-downtown-from-the-dubai-metro-train-at-night.mp4"
+              type="video/mp4">
+          </video>
+        </div>
         <div class="project-card-overlay"></div>
         <div class="project-card-content">
           <div class="project-type">Residential · 2022</div>
@@ -1206,20 +1378,20 @@ its
   <!-- ── ABOUT ── -->
   <section class="about-strip" id="about">
     <div>
-      <h2 class="about-headline reveal-up">Refined.<br><em>Structural.</em><br>Timeless.</h2>
+      <h2 class="about-headline reveal-left">Refined.<br><em>Structural.</em><br>Timeless.</h2>
     </div>
     <div class="about-right">
-      <p class="about-body reveal-up">Vardhaman Construction has shaped skylines across Gujarat for over two decades. We
-        believe great buildings are born from the precise intersection of engineering rigour and architectural vision.
-      </p>
+      <p class="about-body reveal-right">Vardhaman Construction has shaped skylines across Gujarat for over two decades.
+        We believe great buildings are born from the precise intersection of engineering rigour and architectural
+        vision.</p>
       <a href="#contact" class="btn-hero reveal-up">Start a Project</a>
     </div>
   </section>
 
   <!-- ── CTA ── -->
   <section class="cta-section" id="contact">
-    <div class="cta-pre">Let's Build Together</div>
-    <h2 class="cta-title reveal-up">Have a<br><em>Project</em><br>in Mind?</h2>
+    <div class="cta-pre reveal-fade">Let's Build Together</div>
+    <h2 class="cta-title reveal-zoom">Have a<br><em>Project</em><br>in Mind?</h2>
     <div class="cta-btns reveal-up">
       <a href="tel:+91XXXXXXXXXX" class="btn-dark">Call Us</a>
       <a href="mailto:info@vardhaman.in" class="btn-outline-dark">Send Enquiry</a>
@@ -1228,17 +1400,17 @@ its
 
   <!-- ── FOOTER ── -->
   <footer>
-    <div>
+    <div class="reveal-fade">
       <div class="footer-logo-name">VARDHAMAN</div>
       <div class="footer-logo-sub">Construction</div>
     </div>
-    <ul class="footer-links">
+    <ul class="footer-links reveal-fade">
       <li><a href="#">Projects</a></li>
       <li><a href="#">About</a></li>
       <li><a href="#">Contact</a></li>
       <li><a href="#">Privacy Policy</a></li>
     </ul>
-    <div class="footer-copy">© 2024 Vardhaman Construction.<br>All rights reserved.</div>
+    <div class="footer-copy reveal-fade">© 2024 Vardhaman Construction.<br>All rights reserved.</div>
   </footer>
 
   <script>
@@ -1284,13 +1456,15 @@ its
       }, i === 0 ? "+=0.2" : "-=0.08");
     });
 
-    // 3. All stripes fill white
-    loaderTl.to(stripes, { background: "rgba(245,243,239,1)", duration: 0.3, ease: "power2.out" });
-
-    // 4. Cover slides up = loader exits
+    // Ensure mandatory 3 seconds
     loaderTl
-      .to("#ll-cover", { scaleY: 0, transformOrigin: "bottom", duration: 0.8, ease: "power4.inOut" }, "+=0.15")
-      .to("#loader", { yPercent: -100, duration: 0.9, ease: "power4.inOut" }, "-=0.5");
+      .to(".brand-name", { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" })
+      .to(".brand-sub", { opacity: 1, duration: 0.6 }, "-=0.3")
+      .to(".bar", { opacity: 1, duration: 0.4, stagger: 0.05 }, "-=0.4")
+      .add(() => { document.getElementById("loader").classList.add("loader-active"); }, "-=0.4")
+      .to({}, { duration: 2.0 }) // Hold for the remainder of the 3s (approx 1s entrance + 2s hold)
+      .to("#loader-exit", { scaleY: 1, transformOrigin: "bottom", duration: 0.8, ease: "power4.inOut" })
+      .to("#loader", { yPercent: -100, duration: 0.8, ease: "power4.inOut" }, "-=0.4");
 
     function initPage() {
       document.getElementById("loader").style.display = "none";
@@ -1349,18 +1523,44 @@ its
 
     // ── SCROLL REVEALS ──
     function initScrollAnimations() {
+      // Reveal Up
       gsap.utils.toArray(".reveal-up").forEach(el => {
-        gsap.fromTo(el,
-          { opacity: 0, y: 40 },
-          {
-            opacity: 1, y: 0, duration: 0.9, ease: "power3.out",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 85%",
-              toggleActions: "play none none none"
-            }
-          }
-        );
+        gsap.fromTo(el, { opacity: 0, y: 50 }, {
+          opacity: 1, y: 0, duration: 1.2, ease: "power4.out",
+          scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none none" }
+        });
+      });
+
+      // Reveal Left
+      gsap.utils.toArray(".reveal-left").forEach(el => {
+        gsap.fromTo(el, { opacity: 0, x: -60 }, {
+          opacity: 1, x: 0, duration: 1.4, ease: "power4.out",
+          scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none none" }
+        });
+      });
+
+      // Reveal Right
+      gsap.utils.toArray(".reveal-right").forEach(el => {
+        gsap.fromTo(el, { opacity: 0, x: 60 }, {
+          opacity: 1, x: 0, duration: 1.4, ease: "power4.out",
+          scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none none" }
+        });
+      });
+
+      // Reveal Zoom
+      gsap.utils.toArray(".reveal-zoom").forEach(el => {
+        gsap.fromTo(el, { opacity: 0, scale: 0.95 }, {
+          opacity: 1, scale: 1, duration: 1.5, ease: "power3.out",
+          scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none none" }
+        });
+      });
+
+      // Reveal Fade
+      gsap.utils.toArray(".reveal-fade").forEach(el => {
+        gsap.fromTo(el, { opacity: 0 }, {
+          opacity: 1, duration: 1.8, ease: "power2.out",
+          scrollTrigger: { trigger: el, start: "top 95%", toggleActions: "play none none none" }
+        });
       });
 
       // Stat counters
@@ -1388,6 +1588,13 @@ its
         });
       });
     }
+
+    // ── MOBILE MENU ──
+    const menuBtn = document.querySelector(".nav-menu-btn");
+    const navLinksList = document.querySelector(".nav-links");
+    menuBtn.addEventListener("click", () => {
+      navLinksList.classList.toggle("active");
+    });
   </script>
 </body>
 
